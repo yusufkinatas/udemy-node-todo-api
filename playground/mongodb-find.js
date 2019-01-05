@@ -6,10 +6,10 @@ MongoClient.connect('mongodb://127.0.0.1:27017/TodoApp', (err, db) => {
   }
   console.log("Connected to MongoDB server");
 
-  db.collection("Users").find({ name: "Yusuf" }).toArray()
-    .then((docs) => {
-      console.log(JSON.stringify(docs, undefined, 2));
-    })
+  // db.collection("Users").find({ name: "Yusuf" }).toArray()
+  //   .then((docs) => {
+  //     console.log(JSON.stringify(docs, undefined, 2));
+  //   })
 
   // db.collection("Users").find().count()
   // .then(count => {
