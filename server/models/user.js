@@ -2,6 +2,7 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 var UserSchema = new mongoose.Schema({
   email: {
@@ -31,6 +32,23 @@ var UserSchema = new mongoose.Schema({
       required: true
     }
   }]
+});
+
+UserSchema.pre("save", function (next) {
+  var user = this;
+
+  if (user.isModified("password")) {
+    var hash;
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        user.password = hash;
+        next();
+      })
+    })
+  }
+  else {
+    next();
+  }
 });
 
 //overriding toJSON method of instance(document)
